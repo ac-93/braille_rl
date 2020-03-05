@@ -64,7 +64,7 @@ scipy                1.4.1
 seaborn              0.8.1    
 setuptools           45.2.0   
 six                  1.14.0   
-spinup               0.2.0    /mnt/hdd/alexc/Documents/repos/spinningup_v2/spinningup
+spinup               0.2.0   
 tensorboard          1.14.0   
 tensorflow-estimator 1.14.0   
 tensorflow-gpu       1.14.0   
