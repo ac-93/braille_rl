@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import time
 import pandas as pd
 import cv2
-from envs.sim.image_utils import load_video_frames, load_json_obj, process_image, print_sorted_dict
+from algos.image_utils import load_video_frames, process_image
 
 class mockKB:
 

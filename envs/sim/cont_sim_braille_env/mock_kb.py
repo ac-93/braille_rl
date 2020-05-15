@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import pandas as pd
-from envs.sim.image_utils import load_video_frames, load_json_obj, process_image, print_sorted_dict
+from algos.image_utils import load_video_frames, process_image
 
 class mockKB:
 

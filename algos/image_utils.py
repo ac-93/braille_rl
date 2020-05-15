@@ -22,16 +22,6 @@ def plot_state(state, m):
         plt.title('Frame {}'.format(i))
         plt.show()
 
-def load_keras_model(model_dir):
-    # load params
-    params = load_json_obj(model_dir+'params_dict')
-
-    # load model
-    model = keras.models.load_model(model_dir+'best_model.h5')
-    print(model.summary())
-
-    return model, params
-
 def save_json_obj(obj, name):
     with open(name + '.json', 'w') as fp:
         json.dump(obj, fp)
