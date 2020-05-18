@@ -12,3 +12,4 @@ lib
 lib64
 /dist/
 /*.egg-info
+/build/
