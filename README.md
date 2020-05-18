@@ -7,35 +7,38 @@
 ![](figures/all_tasks_short.gif)
 
 ### Structure ###
-
-    ├── algos                    
-        ├── cont_sac_algo 
-            ├── train_cont_model.py
-            ├── sac.py 
-            ├── core.py
-            ├── resume_training.py
-            └── evaluate_model.py  
-        ├── disc_sac_algo
-            └── ...  
-        ├── dd_dqn_algo  
-            └── ...
-        ├── td3_algo
-            └── ...
-        ├── saved_modles
-        ├── image_utils.py
-        ├── rl_utils.py
-        └── plot_progress.py
-    ├── envs   
-        ├── robot
-            ├── discrete
-            └── continuous
-        └── sim
-            ├── discrete
-            └── continuous
+    ├── braille_rl
+        ├── algos                    
+            ├── cont_sac_algo 
+                ├── train_cont_model.py
+                ├── sac.py 
+                ├── core.py
+                ├── resume_training.py
+                └── evaluate_model.py  
+            ├── disc_sac_algo
+                └── ...  
+            ├── dd_dqn_algo  
+                └── ...
+            ├── td3_algo
+                └── ...
+            ├── saved_modles
+            ├── image_utils.py
+            ├── rl_utils.py
+            └── plot_progress.py
+        ├── envs   
+            ├── robot
+                ├── discrete
+                └── continuous
+            └── sim
+                ├── discrete
+                └── continuous
     ├── data  
+    ├── guide
     └── CAD
    
 ### Contents ###
+
+* guide: Details how to use this repository as a starting point for re-running experiments on a physical robot.
 
 * CAD: This directory contains the STL files needed to 3D print the Cherry MX braille keycaps. SLDPRT Files are also included incase minor adjustments are required.
 
@@ -62,5 +65,42 @@ cri
 vsp
 ```
 
-### Setting up experiments on a Physical Robot ###
-Please view the guide directory.
+### Installation ###
+
+```
+# requires python>=3.6
+# It is reccomended that you use a virtual environment for this set up
+
+# clone and install the repo (this may take a while)
+git clone https://github.com/ac-93/braille_rl.git
+cd braille_rl
+pip install -e .
+
+# install Spinningup from openAI
+git clone https://github.com/openai/spinningup.git
+cd spinningup
+pip install -e .
+
+# install common robot interface
+git clone https://github.com/jlloyd237/cri.git
+cd cri
+python setup.py install
+
+# install video stream processor
+git clone https://github.com/jlloyd237/vsp.git
+cd vsp
+python setup.py install
+
+# install python3-v4l2capture
+git clone https://github.com/atareao/python3-v4l2capture.git
+cd python3-v4l2capture
+python setup.py install
+
+# test the installation by running a training script in simulation, from the base directory run
+python algos/dd_dqn_algo/train_discrete_model.py
+
+```
+
+### Setting up Experiments ###
+
+Check the guide for details on how to setup experiments on a physical robot.

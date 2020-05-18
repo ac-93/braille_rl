@@ -36,16 +36,13 @@ git clone https://github.com/atareao/python3-v4l2capture.git
 cd python3-v4l2capture
 python setup.py install
 
-# install some additional packages
-pip install -r requirements.txt
-
 # test the installation by running a training script in simulation, from the base directory run
 python algos/dd_dqn_algo/train_discrete_model.py
 
 ```
 #### Recreating Experiments ####
 
-All experiment parameters are set in the `train_(discrete/cont)_model.py` scripts located in the corresponding algorithm directories. This will save configurations and if specified trained models to the specified `saved_models` directory. An example configuration for each of the possible environments and algorithm combinations for seed 1 is given in the `saved_models` directory. It is reccomended to use the simulated environment for fast prototyping. These training script examples can be copied and run in any directory.
+All experiment parameters are set in the `train_(discrete/cont)_model.py` scripts located in the corresponding algorithm directories. This will save configurations and if specified trained models to the specified `saved_models` directory. An example configuration for each of the possible environments and algorithm combinations for seed 1 is given in the `saved_models` directory. It is reccomended to use the simulated environment for fast prototyping. These training script examples can be copied and run in any directory. Training can also be stopped and resumed from a saved model using the `resume_training.py` scripts, this is helpful for running longer experiments on a physical robot.
 
 ### Running Experiments on Physical Platform ###
 
@@ -74,16 +71,15 @@ In this work the control of a the robot arm levarages the Common Robot Interface
 
 <div style="text-align:center"><img src="images/jogger.png" width="900"></div>
 
-When configuring the robot arm we us mm and degree units throughout. Depending on the tasks, two files will need to be edited for different robotic arm and sensor setups. These are `envs/robot/disc_ur5_braille_env/ur5_w_tactip.py` for the discrete action tasks and `envs/robot/cont_ur5_braille_env/ur5_w_tactip.py` for the continuous action tasks. In both cases 
-
+When configuring the robot arm we us mm and degree units throughout. Depending on the tasks, two files will need to be edited for different robotic arm and sensor setups. These are `envs/robot/disc_ur5_braille_env/ur5_w_tactip.py` for the discrete action tasks and `envs/robot/cont_ur5_braille_env/ur5_w_tactip.py` for the continuous action tasks. In both cases
 ```
 self.robot_tcp  = [x, y, z, alpha, beta, gamma] # tool center point
 self.base_frame = [x, y, z, alpha, beta, gamma] # origin of arm base
 self.home_pose  = [x, y, z, alpha, beta, gamma] # safe position of arm
 ```
-needs to be spedicified. An optional `self.sensor_angle = theta` can be used to orientate the sensor.
+needs to be specified. An optional `self.sensor_angle = theta` can be used to orientate the sensor.
 
-Depending on both the task and the action space different origin points for the work frames needs to be set up differently, in all cases `self.work_frame  = [x, y, z, alpha, beta, gamma]` but these value are chosen according to:
+Depending on both the task and the action space different origin points for the work frames needs to be set up, in all cases `self.work_frame  = [x, y, z, alpha, beta, gamma]` but these value are chosen according to:
 
 | Task                               | Description                                           |
 | ---------------------------------- | ----------------------------------------------------- |
@@ -92,12 +88,23 @@ Depending on both the task and the action space different origin points for the 
 | `Cont-Arrows` &nbsp;&nbsp;&nbsp;   |  3.5mm above center of box covering all arrow keys    |
 | `Cont-Alpha`  &nbsp;&nbsp;&nbsp;   |  3.5mm above center of box covering all alphabet keys |
 
-The robot-jogger tool is useful for finding these work frame positions. Additionally 'tap_move' and 'press_move' can also be adjusted slightly to better suit the specific setup. In the discrete setting be sure to check that each movement gathers a tactile observation without activating a button and in the continuous setting allow for a range of actions that do not activate the button.
+The robot-jogger tool is useful for finding these work frame positions.
+
+Additionally 'tap_move' and 'press_move' can also be adjusted slightly to better suit the specific setup. In the discrete setting be sure to check that each movement gathers a tactile observation without activating a button and in the continuous setting the tap depth range allows for a range of actions that do not activate the button.
 
 ### Evaluating Trained Models ###
 
-### Comparing to Current Work ###
+Evalutation scripts are provided in the algorithm sub directories, this is done per algorithm due to slight difference in the saved models. These script can be called with a saved model directory, saved model number and seed. e.g. ```run_evaluation(model_dir='saved_models/sim/discrete/arrows/dd_dqn/dd_dqn_s2/', model_save_name='tf1_save', seed=1)```. This will test the accuracy and efficiency of the trained model when typing a series of sample sequences as done in the paper. A confusion matrix will also be shown, this is to give some insight into the types of inaccuracies made by the trained model. This can be used to compare between either new/adjusted algorithms or new sensors.
 
+### Comparing Trained models ###
+
+There are three comparisons that will offer the most insight when comparing between different sensors or different algorithms. These are
+
+* Accuracy of trained model e.g. how many misspresses will a trained agent make when typing example key sequences using the `evaluate_model.py` scripts.
+* Efficiency of trained model e.g. how many steps taken to complete these same key sequences.
+* Sample efficieny over training, this can be measured by the number of training steps required to reach high asymptotic performance.
+
+This provides three clear metrics for comparison between new methods or new hardware.
 
 
 

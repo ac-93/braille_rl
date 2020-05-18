@@ -40,7 +40,7 @@ class mockKB:
                              ['NONE', 'NONE','SPACE', 'SPACE', 'SPACE', 'SPACE', 'SPACE', 'SPACE', 'NONE', 'NONE']]
 
             # using training data to gather image from collected set
-            self.training_data_dir = os.path.join( os.path.dirname(__file__), '../../../data/supervised_data/alphabet/train')
+            self.training_data_dir = os.path.join( os.path.dirname(__file__), '../../../../data/supervised_data/alphabet/train')
             self.label_df = pd.read_csv(os.path.join(self.training_data_dir, 'targets_video.csv'))
         else:
             sys.exit('Incorrect mode specified, please choose from [\'arrows\', \'alphabet\']')

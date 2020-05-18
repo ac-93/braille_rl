@@ -50,7 +50,7 @@ class mockKB:
             self.z_max_depth = 6 # z gets mapped from [min_action, max_action] to [0, z_max_depth]
 
             # using training data to gather image from collected set
-            self.training_data_dir = os.path.join( os.path.dirname(__file__), '../../../data/grid_data/alphabet')
+            self.training_data_dir = os.path.join( os.path.dirname(__file__), '../../../../data/grid_data/alphabet')
             self.label_df = pd.read_csv(os.path.join(self.training_data_dir, 'targets_video.csv'))
             self.label_list = self.label_df['obj_lbl'].values
             self.label_arr = np.array([i.split('_') for i in self.label_list]).astype(np.float)
