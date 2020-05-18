@@ -1,4 +1,4 @@
-| WARNING: This code is designed for use on a specific UR5 robotic arm, if using the physical robot environments, workframes defined in ur5_with_tactip.py will need to be altered before use! (for both cont and disc robot envs)... It is reccomended that you use the robot-jogger tool provided in the required [Common Robot Interface](https://github.com/jlloyd237/cri "Common Robot Interface") to find the neccesary coordinates for your setup, details will be given below... |
+| WARNING: This code is designed for use on a specific UR5 robotic arm, if using the physical robot environments, workframes defined in ur5_with_tactip.py will need to be altered before use! (for both cont and disc robot envs)... It is reccomended that you use the robot-jogger tool provided in the required [Common Robot Interface](https://github.com/jlloyd237/cri "Common Robot Interface") to find the neccesary coordinates for your setup, details are given in the guide directory. |
 | --- |
 
 
@@ -51,8 +51,16 @@
   * evaluate_model.py will evaluate the accuracy and speed of a saved model.
   * Shared utility functions are provided in image_utils.py and rl_utils.py.
   
-### Requirements ###
-...Under Construction
+  
+### Dependencies:
+```
+tensorflow 1.15.0
+gym
+cv2
+numpy
+cri
+vsp
+```
 
 ### Setting up experiments on a Physical Robot ###
-...Under Construction
+Please view the guide directory.

@@ -10,3 +10,5 @@ parts
 src/*.egg-info
 lib
 lib64
+/dist/
+/*.egg-info
