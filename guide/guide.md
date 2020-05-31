@@ -61,7 +61,7 @@ The 3d printable keycaps are designed to fit on Cherry MX switches, the Black sw
 
 We printed the keycaps using a high precision 3d printer (Stratasys Objet260 Connex), this ensures that the features to be interpreted are accurate and consistent.
 
-Ideally, recreating these experiments will use the same keyboard or the same key switches, if these components are unavailable a similar experiment can be created using alternatives but differences should be noted. If using an alternative keyboard be sure that evdev accesses the right keyboard by specifying the correct keyboard name in ```ur5GymEnv.py``` files. Additionally, keys are currently presumed to be spaces 19mm apart for discrete tasks and safety limits are specific to this keyboard. These will also need to be adjusted to match alternative keyboards.
+Ideally, recreating these experiments will use the same keyboard or the same key switches, if these components are unavailable a similar experiment can be created using alternatives but differences should be noted. If using an alternative keyboard be sure that evdev accesses the right keyboard by specifying the correct keyboard name in ```ur5GymEnv.py``` files. Additionally, keys are currently presumed to be spaces 19mm apart for discrete tasks with safety limits that are specific to this keyboard, a tap depth actuation point of 2mm is also assumed. These will also need to be adjusted to match alternative keyboards.
 
 #### Configuring Sensor ####
 
@@ -83,7 +83,7 @@ In this work the control of a the robot arm leverages the Common Robot Interface
 
 <div style="text-align:center"><img src="../figures/jogger.png" width="600"></div>
 
-When configuring the robot arm we us mm and degree units throughout. Depending on the tasks, two files will need to be edited for different robotic arm and sensor setups. These are `envs/robot/disc_ur5_braille_env/ur5_w_tactip.py` for the discrete action tasks and `envs/robot/cont_ur5_braille_env/ur5_w_tactip.py` for the continuous action tasks. In both cases
+When configuring the robot arm we use mm and degree units throughout. Depending on the tasks, two files will need to be edited for different robotic arm and sensor setups. These are `envs/robot/disc_ur5_braille_env/ur5_w_tactip.py` for the discrete action tasks and `envs/robot/cont_ur5_braille_env/ur5_w_tactip.py` for the continuous action tasks. In both cases
 ```
 self.robot_tcp  = [x, y, z, alpha, beta, gamma] # tool center point
 self.base_frame = [x, y, z, alpha, beta, gamma] # origin of arm base
@@ -113,11 +113,11 @@ There are three comparisons that will offer the most insight when comparing betw
 
 * Accuracy of trained model e.g. how many miss-presses will a trained agent make when typing example key sequences using the `evaluate_model.py` scripts.
 * Efficiency of trained model e.g. how many steps taken to complete these same key sequences.
-* Sample efficiency over training, this can be measured by the number of training steps required to reach asymptotic performance.
+* Sample efficiency over training, this can be measured by the number of training steps required to reach asymptotic performance. In this work we use the first epoch to acheive 95% of the maximum episodic return acheived throughout training, this can be found by running the 'plot_progress' function.
 
-Evaluation scripts are provided in the algorithm sub directories, this is done per algorithm due to slight difference in the saved models. These script can be called with a saved model directory, saved model number and seed. e.g. ```run_evaluation(model_dir='saved_models/sim/discrete/arrows/dd_dqn/dd_dqn_s2/', model_save_name='tf1_save', seed=1)```. This will test the accuracy and efficiency of the trained model when typing a series of sample sequences as done in the paper. A confusion matrix will also be shown, this is to give some insight into the types of inaccuracies made by the trained model. This can be used to compare between either new/adjusted algorithms or new sensors.
+Evaluation scripts are provided in the algorithm sub directories, this is done per algorithm due to slight difference in the saved models. These scripts can be called with a saved model directory, saved model number and seed. e.g. ```run_evaluation(model_dir='saved_models/sim/discrete/arrows/dd_dqn/dd_dqn_s2/', model_save_name='tf1_save', seed=1)```. This will test the accuracy and efficiency of the trained model when typing a series of sample sequences as done in the paper. A confusion matrix will also be shown, this is to give some insight into the types of inaccuracies made by the trained model. This can be used to compare between either new/adjusted algorithms or new sensors.
 
-The sample efficiency can be found by running the functions found in 'plot_progress.py' and providing the 'progress.txt' file found in saved_model directories. This will return graphs of training curves similar to those used in the paper for comparison. Additionally the first epoch in which an average return of >= 95% of the max return for that training run will be displayed. This is a measure of sample efficiency and can be used along with the other metrics for comparison. 
+The sample efficiency can be found by running the functions found in 'plot_progress.py' and providing the 'progress.txt' file found in saved_model directories. This will return graphs of training curves similar to those used in the paper for comparison. Additionally the first epoch in which an average return of >= 95% of the max return for that training run will be displayed. This is a measure of sample efficiency and can be used along with the other metrics for comparison.
 
 
 
