@@ -5,10 +5,7 @@ from spinup.utils.logx import restore_tf_graph
 import tensorflow as tf
 
 from braille_rl.algos.image_utils import *
-from braille_rl.envs.sim.disc_sim_braille_env.mockKBGymEnv import mockKBGymEnv as disc_mockKBGymEnv
-from braille_rl.envs.robot.disc_ur5_braille_env.ur5GymEnv  import UR5GymEnv    as disc_UR5GymEnv
-from braille_rl.envs.sim.cont_sim_braille_env.mockKBGymEnv import mockKBGymEnv as cont_mockKBGymEnv
-from braille_rl.envs.robot.cont_ur5_braille_env.ur5GymEnv  import UR5GymEnv    as cont_UR5GymEnv
+
 
 # configure gpu use and supress tensorflow warnings
 gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.6)
@@ -70,17 +67,19 @@ def load_model(model_dir, model_save_name):
     config = load_json_obj(os.path.join(model_dir, 'config'))
 
     if config['rl_params']['env_type'] == 'discrete':
-
         if 'sim' in config['rl_params']['platform']:
+            from braille_rl.envs.sim.disc_sim_braille_env.mockKBGymEnv import mockKBGymEnv as disc_mockKBGymEnv
             env = disc_mockKBGymEnv(mode=config['rl_params']['env_mode'], max_steps=config['rl_params']['max_ep_len'])
         elif 'robot' in config['rl_params']['platform']:
+            from braille_rl.envs.robot.disc_ur5_braille_env.ur5GymEnv  import UR5GymEnv    as disc_UR5GymEnv
             env = disc_UR5GymEnv(mode=config['rl_params']['env_mode'], max_steps=config['rl_params']['max_ep_len'])
 
     elif config['rl_params']['env_type'] == 'continuous':
-
         if 'sim' in config['rl_params']['platform']:
+            from braille_rl.envs.sim.cont_sim_braille_env.mockKBGymEnv import mockKBGymEnv as cont_mockKBGymEnv
             env = cont_mockKBGymEnv(mode=config['rl_params']['env_mode'], max_steps=config['rl_params']['max_ep_len'])
         elif 'robot' in config['rl_params']['platform']:
+            from braille_rl.envs.robot.cont_ur5_braille_env.ur5GymEnv  import UR5GymEnv    as cont_UR5GymEnv
             env = cont_UR5GymEnv(mode=config['rl_params']['env_mode'], max_steps=config['rl_params']['max_ep_len'])
 
     print('Config: ')

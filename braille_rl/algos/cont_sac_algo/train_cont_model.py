@@ -2,8 +2,6 @@ import os
 from spinup.utils.run_utils import setup_logger_kwargs
 
 from braille_rl.algos.cont_sac_algo.sac import sac
-from braille_rl.envs.sim.cont_sim_braille_env.mockKBGymEnv import mockKBGymEnv
-from braille_rl.envs.robot.cont_ur5_braille_env.ur5GymEnv import UR5GymEnv
 
 # atari
 network_params = {
@@ -62,8 +60,10 @@ logger_kwargs = setup_logger_kwargs(exp_name='cont_sac',
                                     datestamp=False)
 
 if 'sim' in rl_params['platform']:
+    from braille_rl.envs.sim.cont_sim_braille_env.mockKBGymEnv import mockKBGymEnv
     env = mockKBGymEnv(mode=rl_params['env_mode'], max_steps=rl_params['max_ep_len'])
 elif 'robot' in rl_params['platform']:
+    from braille_rl.envs.robot.cont_ur5_braille_env.ur5GymEnv import UR5GymEnv
     env = UR5GymEnv(mode=rl_params['env_mode'], max_steps=rl_params['max_ep_len'])
 
 sac(env, logger_kwargs=logger_kwargs,

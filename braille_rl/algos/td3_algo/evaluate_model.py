@@ -6,8 +6,6 @@ import csv
 from spinup.utils.logx import restore_tf_graph
 from sklearn.metrics import confusion_matrix
 
-from braille_rl.envs.sim.cont_sim_braille_env.mockKBGymEnv import mockKBGymEnv
-from braille_rl.envs.robot.cont_ur5_braille_env.ur5GymEnv import UR5GymEnv
 from braille_rl.algos.rl_utils import *
 from braille_rl.algos.image_utils import load_json_obj, permutation, plot_confusion_matrix
 
@@ -25,8 +23,10 @@ def run_evaluation(model_dir, model_save_name, seed=1):
     config = load_json_obj(os.path.join(model_dir, 'config'))
 
     if 'sim' in config['rl_params']['platform']:
+        from braille_rl.envs.sim.cont_sim_braille_env.mockKBGymEnv import mockKBGymEnv
         env = mockKBGymEnv(mode=config['rl_params']['env_mode'], max_steps=config['rl_params']['max_ep_len'])
     elif 'robot' in config['rl_params']['platform']:
+        from braille_rl.envs.robot.cont_ur5_braille_env.ur5GymEnv import UR5GymEnv
         env = UR5GymEnv(mode=config['rl_params']['env_mode'], max_steps=config['rl_params']['max_ep_len'])
 
     # define neccesry inputs/outputs
@@ -181,3 +181,6 @@ def run_evaluation(model_dir, model_save_name, seed=1):
                           title='Normalized Confusion matrix', dirname=None, save_flag=False)
 
     env.close()
+
+if __name__ == '__main__':
+    run_evaluation(model_dir='../saved_models/sim/continuous/arrows/td3/td3_s2/', model_save_name='tf1_save', seed=1)

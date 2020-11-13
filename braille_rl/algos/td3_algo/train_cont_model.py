@@ -2,8 +2,6 @@ import os
 from spinup.utils.run_utils import setup_logger_kwargs
 
 from braille_rl.algos.td3_algo.td3 import td3
-from braille_rl.envs.sim.cont_sim_braille_env.mockKBGymEnv import mockKBGymEnv
-from braille_rl.envs.robot.cont_ur5_braille_env.ur5GymEnv import UR5GymEnv
 
 # atari
 network_params = {
@@ -26,8 +24,8 @@ rl_params = {
     'platform':'sim',
     # 'platform':'robot',
     'env_type':'continuous',
-    # 'env_mode':'arrows',
-    'env_mode':'alphabet',
+    'env_mode':'arrows',
+    # 'env_mode':'alphabet',
 
     # ==== control params ====
     'seed':int(2),
@@ -38,7 +36,7 @@ rl_params = {
     'start_steps':200,
     'max_ep_len':25,
     'num_tests':20,
-    'save_freq':None, # Warning, uncompressed replay buffer takes a lot of space
+    'save_freq':1, # Warning, uncompressed replay buffer takes a lot of space
 
     # ==== rl params ====
     'use_HER':True,
@@ -67,8 +65,10 @@ logger_kwargs = setup_logger_kwargs(exp_name='td3',
                                     datestamp=False)
 
 if 'sim' in rl_params['platform']:
+    from braille_rl.envs.sim.cont_sim_braille_env.mockKBGymEnv import mockKBGymEnv
     env = mockKBGymEnv(mode=rl_params['env_mode'], max_steps=rl_params['max_ep_len'])
 elif 'robot' in rl_params['platform']:
+    from braille_rl.envs.robot.cont_ur5_braille_env.ur5GymEnv import UR5GymEnv
     env = UR5GymEnv(mode=rl_params['env_mode'], max_steps=rl_params['max_ep_len'])
 
 td3(env, logger_kwargs=logger_kwargs,

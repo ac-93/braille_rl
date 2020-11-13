@@ -2,8 +2,8 @@ from braille_rl.algos.dd_dqn_algo.dd_dqn import *
 from braille_rl.algos.rl_utils import load_model
 
 # saved model to resume training from
-model_dir = '../saved_models/sim/discrete/arrows/dd_dqn/dd_dqn_s1/'
-# model_dir = '../saved_models/sim/discrete/alphabet/dd_dqn/dd_dqn_s1/'
+# model_dir = '../saved_models/sim/discrete/arrows/dd_dqn/dd_dqn_s1/'
+model_dir = '../saved_models/sim/discrete/alphabet/dd_dqn/dd_dqn_s2/'
 model_save_name = 'tf1_save'
 
 sess, model, logger_kwargs, rl_params, network_params, env, resume_state = load_model(model_dir, model_save_name)
